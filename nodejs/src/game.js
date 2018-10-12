@@ -80,6 +80,14 @@ var Game = function () {
     }
   }
 
+  var nextPlayer = function () {
+    currentPlayerIndex += 1;
+    if (currentPlayerIndex == players.length)
+      currentPlayerIndex = 0;
+
+    currentPlayer = players[currentPlayerIndex];
+  }
+
   this.roll = function (roll) {
     console.log(currentPlayer.name + " is the current player");
     console.log("They have rolled a " + roll);
@@ -117,22 +125,12 @@ var Game = function () {
           currentPlayer.purse + " Gold Coins.");
 
         var winner = didPlayerWin();
-        currentPlayerIndex += 1;
-        if (currentPlayerIndex == players.length)
-          currentPlayerIndex = 0;
-
-        currentPlayer = players[currentPlayerIndex];
+        nextPlayer();
         return winner;
       } else {
-        currentPlayerIndex += 1;
-        if (currentPlayerIndex == players.length)
-          currentPlayerIndex = 0;
-
-        currentPlayer = players[currentPlayerIndex];
+        nextPlayer();
         return true;
       }
-
-
     } else {
 
       console.log("Answer was correct!!!!");
@@ -143,11 +141,7 @@ var Game = function () {
 
       var winner = didPlayerWin();
 
-      currentPlayerIndex += 1;
-      if (currentPlayerIndex == players.length)
-        currentPlayerIndex = 0;
-
-      currentPlayer = players[currentPlayerIndex];
+      nextPlayer();
 
       return winner;
     }
@@ -158,10 +152,7 @@ var Game = function () {
     console.log(currentPlayer.name + " was sent to the penalty box");
     currentPlayer.inPenaltyBox = true;
 
-    currentPlayerIndex += 1;
-    if (currentPlayerIndex == players.length)
-      currentPlayerIndex = 0;
-    currentPlayer = players[currentPlayerIndex];
+    nextPlayer();
     return true;
   };
 };
