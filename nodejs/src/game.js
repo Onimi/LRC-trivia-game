@@ -5,6 +5,7 @@ var Game = function () {
   var purses = new Array(6);
   var inPenaltyBox = new Array(6);
 
+  var questionCategories = ['Pop', 'Science', 'Sports', 'Rock'];
   var popQuestions = new Array();
   var scienceQuestions = new Array();
   var sportsQuestions = new Array();
@@ -18,25 +19,8 @@ var Game = function () {
   };
 
   var currentCategory = function () {
-    if (places[currentPlayer] == 0)
-      return 'Pop';
-    if (places[currentPlayer] == 4)
-      return 'Pop';
-    if (places[currentPlayer] == 8)
-      return 'Pop';
-    if (places[currentPlayer] == 1)
-      return 'Science';
-    if (places[currentPlayer] == 5)
-      return 'Science';
-    if (places[currentPlayer] == 9)
-      return 'Science';
-    if (places[currentPlayer] == 2)
-      return 'Sports';
-    if (places[currentPlayer] == 6)
-      return 'Sports';
-    if (places[currentPlayer] == 10)
-      return 'Sports';
-    return 'Rock';
+    var categoyIndex = places[currentPlayer] % questionCategories.length;
+    return questionCategories[categoyIndex];
   };
 
   for (var i = 0; i < 50; i++) {
