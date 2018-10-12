@@ -1,4 +1,5 @@
 var Game = function () {
+  var PLACES_NUMBER = 12;
   var players = new Array();
   var places = new Array(6);
   var purses = new Array(6);
@@ -92,8 +93,8 @@ var Game = function () {
 
         console.log(players[currentPlayer] + " is getting out of the penalty box");
         places[currentPlayer] = places[currentPlayer] + roll;
-        if (places[currentPlayer] > 11) {
-          places[currentPlayer] = places[currentPlayer] - 12;
+        if (places[currentPlayer] >= PLACES_NUMBER) {
+          places[currentPlayer] = places[currentPlayer] - PLACES_NUMBER;
         }
 
         console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
@@ -106,8 +107,8 @@ var Game = function () {
     } else {
 
       places[currentPlayer] = places[currentPlayer] + roll;
-      if (places[currentPlayer] > 11) {
-        places[currentPlayer] = places[currentPlayer] - 12;
+      if (places[currentPlayer] >= PLACES_NUMBER) {
+        places[currentPlayer] = places[currentPlayer] - PLACES_NUMBER;
       }
 
       console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
