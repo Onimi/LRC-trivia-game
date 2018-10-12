@@ -7,10 +7,13 @@ var Player = function (name) {
 
 var Game = function () {
   var PLACES_NUMBER = 12;
+  var MIN_PLAYERS_NUMBER = 2;
   var MAX_PLAYERS_NUMBER = 6;
   var VICTORY_POINT_NUMBER = 6;
 
   var players = [];
+  var currentPlayer;
+  var currentPlayerIndex;
 
   var questionCategories = ['Pop', 'Science', 'Sports', 'Rock'];
   var questions = {
@@ -20,28 +23,19 @@ var Game = function () {
     'Rock': []
   };
 
-  var currentPlayer = 0;
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function () {
-    var player = players[currentPlayer];
-    return !(player.purse == VICTORY_POINT_NUMBER)
+    return !(currentPlayer.purse == VICTORY_POINT_NUMBER)
   };
 
   var currentCategory = function () {
-    var player = players[currentPlayer]
-    var categoyIndex = player.place % questionCategories.length;
+    var categoyIndex = currentPlayer.place % questionCategories.length;
     return questionCategories[categoyIndex];
   };
 
-  for (var i = 0; i < 50; i++) {
-    questionCategories.forEach(function(category) {
-      questions[category].push(category + " Question " + i);
-    });
-  };
-
-  this.isPlayable = function (howManyPlayers) {
-    return howManyPlayers >= 2;
+  this.isPlayable = function () {
+    return players.length >= MIN_PLAYERS_NUMBER && players.length <= MAX_PLAYERS_NUMBER;
   };
 
   this.add = function (playerName) {
@@ -54,10 +48,25 @@ var Game = function () {
     return true;
   };
 
+  this.init = function () {
+    if (this.isPlayable()) {
+      currentPlayerIndex = 0;
+      currentPlayer = players[currentPlayerIndex];
+
+      for (var i = 0; i < 50; i++) {
+        questionCategories.forEach(function(category) {
+          questions[category].push(category + " Question " + i);
+        });
+      };
+
+      return true;
+    }
+    return false
+  }
+
   this.howManyPlayers = function () {
     return players.length;
   };
-
 
   var askQuestion = function () {
     var questionCollection = questions[currentCategory()];
@@ -72,53 +81,54 @@ var Game = function () {
   }
 
   this.roll = function (roll) {
-    var player = players[currentPlayer];
-    console.log(player.name + " is the current player");
+    console.log(currentPlayer.name + " is the current player");
     console.log("They have rolled a " + roll);
 
-    if (player.inPenaltyBox) {
+    if (currentPlayer.inPenaltyBox) {
       if (roll % 2 != 0) {
         isGettingOutOfPenaltyBox = true;
 
-        console.log(player.name + " is getting out of the penalty box");
-        movePlayer(player, roll);
+        console.log(currentPlayer.name + " is getting out of the penalty box");
+        movePlayer(currentPlayer, roll);
 
-        console.log(player.name + "'s new location is " + player.place);
+        console.log(currentPlayer.name + "'s new location is " + currentPlayer.place);
         console.log("The category is " + currentCategory());
         askQuestion();
       } else {
-        console.log(player.name + " is not getting out of the penalty box");
+        console.log(currentPlayer.name + " is not getting out of the penalty box");
         isGettingOutOfPenaltyBox = false;
       }
     } else {
 
-      movePlayer(player, roll);
+      movePlayer(currentPlayer, roll);
 
-      console.log(player.name + "'s new location is " + player.place);
+      console.log(currentPlayer.name + "'s new location is " + currentPlayer.place);
       console.log("The category is " + currentCategory());
       askQuestion();
     }
   };
 
   this.wasCorrectlyAnswered = function () {
-    var player = players[currentPlayer];
-    if (player.inPenaltyBox) {
+    if (currentPlayer.inPenaltyBox) {
       if (isGettingOutOfPenaltyBox) {
         console.log('Answer was correct!!!!');
-        player.purse += 1;
-        console.log(player.name + " now has " +
-            player.purse + " Gold Coins.");
+        currentPlayer.purse += 1;
+        console.log(currentPlayer.name + " now has " +
+          currentPlayer.purse + " Gold Coins.");
 
         var winner = didPlayerWin();
-        currentPlayer += 1;
-        if (currentPlayer == players.length)
-          currentPlayer = 0;
+        currentPlayerIndex += 1;
+        if (currentPlayerIndex == players.length)
+          currentPlayerIndex = 0;
 
+        currentPlayer = players[currentPlayerIndex];
         return winner;
       } else {
-        currentPlayer += 1;
-        if (currentPlayer == players.length)
-          currentPlayer = 0;
+        currentPlayerIndex += 1;
+        if (currentPlayerIndex == players.length)
+          currentPlayerIndex = 0;
+
+        currentPlayer = players[currentPlayerIndex];
         return true;
       }
 
@@ -127,29 +137,31 @@ var Game = function () {
 
       console.log("Answer was correct!!!!");
 
-      player.purse += 1;
-      console.log(player.name + " now has " +
-          player.purse + " Gold Coins.");
+      currentPlayer.purse += 1;
+      console.log(currentPlayer.name + " now has " +
+        currentPlayer.purse + " Gold Coins.");
 
       var winner = didPlayerWin();
 
-      currentPlayer += 1;
-      if (currentPlayer == players.length)
-        currentPlayer = 0;
+      currentPlayerIndex += 1;
+      if (currentPlayerIndex == players.length)
+        currentPlayerIndex = 0;
+
+      currentPlayer = players[currentPlayerIndex];
 
       return winner;
     }
   };
 
   this.wrongAnswer = function () {
-    var player = players[currentPlayer];
     console.log('Question was incorrectly answered');
-    console.log(player.name + " was sent to the penalty box");
-    player.inPenaltyBox = true;
+    console.log(currentPlayer.name + " was sent to the penalty box");
+    currentPlayer.inPenaltyBox = true;
 
-    currentPlayer += 1;
-    if (currentPlayer == players.length)
-      currentPlayer = 0;
+    currentPlayerIndex += 1;
+    if (currentPlayerIndex == players.length)
+      currentPlayerIndex = 0;
+    currentPlayer = players[currentPlayerIndex];
     return true;
   };
 };
@@ -161,6 +173,8 @@ var game = new Game();
 game.add('Chet');
 game.add('Pat');
 game.add('Sue');
+
+var isReady = game.init();
 
 do {
 
