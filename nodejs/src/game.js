@@ -60,6 +60,13 @@ var Game = function () {
     console.log( questionCollection.shift() );
   };
 
+  var movePlayer = function (playerIndex, steps) {
+    places[playerIndex] = places[playerIndex] + steps;
+    if (places[playerIndex] >= PLACES_NUMBER) {
+      places[playerIndex] = places[playerIndex] - PLACES_NUMBER;
+    }
+  }
+
   this.roll = function (roll) {
     console.log(players[currentPlayer] + " is the current player");
     console.log("They have rolled a " + roll);
@@ -69,10 +76,7 @@ var Game = function () {
         isGettingOutOfPenaltyBox = true;
 
         console.log(players[currentPlayer] + " is getting out of the penalty box");
-        places[currentPlayer] = places[currentPlayer] + roll;
-        if (places[currentPlayer] >= PLACES_NUMBER) {
-          places[currentPlayer] = places[currentPlayer] - PLACES_NUMBER;
-        }
+        movePlayer(currentPlayer, roll);
 
         console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
         console.log("The category is " + currentCategory());
@@ -83,10 +87,7 @@ var Game = function () {
       }
     } else {
 
-      places[currentPlayer] = places[currentPlayer] + roll;
-      if (places[currentPlayer] >= PLACES_NUMBER) {
-        places[currentPlayer] = places[currentPlayer] - PLACES_NUMBER;
-      }
+      movePlayer(currentPlayer, roll);
 
       console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
       console.log("The category is " + currentCategory());
