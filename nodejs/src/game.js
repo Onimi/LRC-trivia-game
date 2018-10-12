@@ -1,12 +1,16 @@
+var Player = function (name) {
+  this.name = name;
+  this.place = 0;
+  this.purse = 0;
+  this.inPenaltyBox = false;
+}
+
 var Game = function () {
   var PLACES_NUMBER = 12;
   var MAX_PLAYERS_NUMBER = 6;
   var VICTORY_POINT_NUMBER = 6;
 
-  var players = new Array();
-  var places = new Array(MAX_PLAYERS_NUMBER);
-  var purses = new Array(MAX_PLAYERS_NUMBER);
-  var inPenaltyBox = new Array(MAX_PLAYERS_NUMBER);
+  var players = [];
 
   var questionCategories = ['Pop', 'Science', 'Sports', 'Rock'];
   var questions = {
@@ -20,11 +24,13 @@ var Game = function () {
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function () {
-    return !(purses[currentPlayer] == VICTORY_POINT_NUMBER)
+    var player = players[currentPlayer];
+    return !(player.purse == VICTORY_POINT_NUMBER)
   };
 
   var currentCategory = function () {
-    var categoyIndex = places[currentPlayer] % questionCategories.length;
+    var player = players[currentPlayer]
+    var categoyIndex = player.place % questionCategories.length;
     return questionCategories[categoyIndex];
   };
 
@@ -39,10 +45,8 @@ var Game = function () {
   };
 
   this.add = function (playerName) {
-    players.push(playerName);
-    places[this.howManyPlayers() - 1] = 0;
-    purses[this.howManyPlayers() - 1] = 0;
-    inPenaltyBox[this.howManyPlayers() - 1] = false;
+    var player = new Player(playerName);
+    players.push(player);
 
     console.log(playerName + " was added");
     console.log("They are player number " + players.length);
@@ -60,48 +64,50 @@ var Game = function () {
     console.log( questionCollection.shift() );
   };
 
-  var movePlayer = function (playerIndex, steps) {
-    places[playerIndex] = places[playerIndex] + steps;
-    if (places[playerIndex] >= PLACES_NUMBER) {
-      places[playerIndex] = places[playerIndex] - PLACES_NUMBER;
+  var movePlayer = function (player, steps) {
+    player.place = player.place + steps;
+    if (player.place >= PLACES_NUMBER) {
+      player.place = player.place - PLACES_NUMBER;
     }
   }
 
   this.roll = function (roll) {
-    console.log(players[currentPlayer] + " is the current player");
+    var player = players[currentPlayer];
+    console.log(player.name + " is the current player");
     console.log("They have rolled a " + roll);
 
-    if (inPenaltyBox[currentPlayer]) {
+    if (player.inPenaltyBox) {
       if (roll % 2 != 0) {
         isGettingOutOfPenaltyBox = true;
 
-        console.log(players[currentPlayer] + " is getting out of the penalty box");
-        movePlayer(currentPlayer, roll);
+        console.log(player.name + " is getting out of the penalty box");
+        movePlayer(player, roll);
 
-        console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
+        console.log(player.name + "'s new location is " + player.place);
         console.log("The category is " + currentCategory());
         askQuestion();
       } else {
-        console.log(players[currentPlayer] + " is not getting out of the penalty box");
+        console.log(player.name + " is not getting out of the penalty box");
         isGettingOutOfPenaltyBox = false;
       }
     } else {
 
-      movePlayer(currentPlayer, roll);
+      movePlayer(player, roll);
 
-      console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
+      console.log(player.name + "'s new location is " + player.place);
       console.log("The category is " + currentCategory());
       askQuestion();
     }
   };
 
   this.wasCorrectlyAnswered = function () {
-    if (inPenaltyBox[currentPlayer]) {
+    var player = players[currentPlayer];
+    if (player.inPenaltyBox) {
       if (isGettingOutOfPenaltyBox) {
         console.log('Answer was correct!!!!');
-        purses[currentPlayer] += 1;
-        console.log(players[currentPlayer] + " now has " +
-            purses[currentPlayer] + " Gold Coins.");
+        player.purse += 1;
+        console.log(player.name + " now has " +
+            player.purse + " Gold Coins.");
 
         var winner = didPlayerWin();
         currentPlayer += 1;
@@ -121,9 +127,9 @@ var Game = function () {
 
       console.log("Answer was correct!!!!");
 
-      purses[currentPlayer] += 1;
-      console.log(players[currentPlayer] + " now has " +
-          purses[currentPlayer] + " Gold Coins.");
+      player.purse += 1;
+      console.log(player.name + " now has " +
+          player.purse + " Gold Coins.");
 
       var winner = didPlayerWin();
 
@@ -136,9 +142,10 @@ var Game = function () {
   };
 
   this.wrongAnswer = function () {
+    var player = players[currentPlayer];
     console.log('Question was incorrectly answered');
-    console.log(players[currentPlayer] + " was sent to the penalty box");
-    inPenaltyBox[currentPlayer] = true;
+    console.log(player.name + " was sent to the penalty box");
+    player.inPenaltyBox = true;
 
     currentPlayer += 1;
     if (currentPlayer == players.length)
