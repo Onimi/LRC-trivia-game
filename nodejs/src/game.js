@@ -1,9 +1,12 @@
 var Game = function () {
   var PLACES_NUMBER = 12;
+  var MAX_PLAYERS_NUMBER = 6;
+  var VICTORY_POINT_NUMBER = 6;
+
   var players = new Array();
-  var places = new Array(6);
-  var purses = new Array(6);
-  var inPenaltyBox = new Array(6);
+  var places = new Array(MAX_PLAYERS_NUMBER);
+  var purses = new Array(MAX_PLAYERS_NUMBER);
+  var inPenaltyBox = new Array(MAX_PLAYERS_NUMBER);
 
   var questionCategories = ['Pop', 'Science', 'Sports', 'Rock'];
   var questions = {
@@ -17,7 +20,7 @@ var Game = function () {
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function () {
-    return !(purses[currentPlayer] == 6)
+    return !(purses[currentPlayer] == VICTORY_POINT_NUMBER)
   };
 
   var currentCategory = function () {
