@@ -6,10 +6,12 @@ var Game = function () {
   var inPenaltyBox = new Array(6);
 
   var questionCategories = ['Pop', 'Science', 'Sports', 'Rock'];
-  var popQuestions = new Array();
-  var scienceQuestions = new Array();
-  var sportsQuestions = new Array();
-  var rockQuestions = new Array();
+  var questions = {
+    'Pop': [],
+    'Science': [],
+    'Sports': [],
+    'Rock': []
+  };
 
   var currentPlayer = 0;
   var isGettingOutOfPenaltyBox = false;
@@ -24,10 +26,9 @@ var Game = function () {
   };
 
   for (var i = 0; i < 50; i++) {
-    popQuestions.push("Pop Question " + i);
-    scienceQuestions.push("Science Question " + i);
-    sportsQuestions.push("Sports Question " + i);
-    rockQuestions.push("Rock Question " + i);
+    questionCategories.forEach(function(category) {
+      questions[category].push(category + " Question " + i);
+    });
   };
 
   this.isPlayable = function (howManyPlayers) {
@@ -52,14 +53,8 @@ var Game = function () {
 
 
   var askQuestion = function () {
-    if (currentCategory() == 'Pop')
-      console.log(popQuestions.shift());
-    if (currentCategory() == 'Science')
-      console.log(scienceQuestions.shift());
-    if (currentCategory() == 'Sports')
-      console.log(sportsQuestions.shift());
-    if (currentCategory() == 'Rock')
-      console.log(rockQuestions.shift());
+    var questionCollection = questions[currentCategory()];
+    console.log( questionCollection.shift() );
   };
 
   this.roll = function (roll) {
