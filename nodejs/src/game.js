@@ -87,28 +87,27 @@ var Game = function () {
     currentPlayer = players[currentPlayerIndex];
   };
 
+  var getOutOfPenaltyBox = function (roll) {
+    isGettingOutOfPenaltyBox = true;
+    if (!currentPlayer.inPenaltyBox) {
+      return;
+    }
+    if (roll % 2 === 0) {
+      console.log(currentPlayer.name + " is not getting out of the penalty box");
+      isGettingOutOfPenaltyBox = false;
+    } else {
+      console.log(currentPlayer.name + " is getting out of the penalty box");
+    }
+  };
+
   this.roll = function (roll) {
     console.log(currentPlayer.name + " is the current player");
     console.log("They have rolled a " + roll);
 
-    if (currentPlayer.inPenaltyBox) {
-      if (roll % 2 != 0) {
-        isGettingOutOfPenaltyBox = true;
+    getOutOfPenaltyBox(roll);
 
-        console.log(currentPlayer.name + " is getting out of the penalty box");
-        movePlayer(currentPlayer, roll);
-
-        console.log(currentPlayer.name + "'s new location is " + currentPlayer.place);
-        console.log("The category is " + currentCategory());
-        askQuestion();
-      } else {
-        console.log(currentPlayer.name + " is not getting out of the penalty box");
-        isGettingOutOfPenaltyBox = false;
-      }
-    } else {
-
+    if ( isGettingOutOfPenaltyBox ) {
       movePlayer(currentPlayer, roll);
-
       console.log(currentPlayer.name + "'s new location is " + currentPlayer.place);
       console.log("The category is " + currentCategory());
       askQuestion();
@@ -116,34 +115,18 @@ var Game = function () {
   };
 
   this.wasCorrectlyAnswered = function () {
-    if (currentPlayer.inPenaltyBox) {
-      if (isGettingOutOfPenaltyBox) {
-        console.log('Answer was correct!!!!');
-        currentPlayer.purse += 1;
-        console.log(currentPlayer.name + " now has " +
-          currentPlayer.purse + " Gold Coins.");
-
-        var winner = didPlayerWin();
-        nextPlayer();
-        return winner;
-      } else {
-        nextPlayer();
-        return true;
-      }
-    } else {
-
-      console.log("Answer was correct!!!!");
-
+    var winner = true;
+    if (isGettingOutOfPenaltyBox) {
+      console.log('Answer was correct!!!!');
       currentPlayer.purse += 1;
       console.log(currentPlayer.name + " now has " +
         currentPlayer.purse + " Gold Coins.");
 
-      var winner = didPlayerWin();
-
-      nextPlayer();
-
-      return winner;
+      winner = didPlayerWin();
     }
+
+    nextPlayer();
+    return winner;
   };
 
   this.wrongAnswer = function () {
