@@ -8,7 +8,6 @@ var Player = function (name) {
 var Game = function () {
   var PLACES_NUMBER = 12;
   var MIN_PLAYERS_NUMBER = 2;
-  var MAX_PLAYERS_NUMBER = 6;
   var VICTORY_POINT_NUMBER = 6;
 
   var players = [];
@@ -35,7 +34,7 @@ var Game = function () {
   };
 
   this.isPlayable = function () {
-    return players.length >= MIN_PLAYERS_NUMBER && players.length <= MAX_PLAYERS_NUMBER;
+    return players.length >= MIN_PLAYERS_NUMBER;
   };
 
   this.add = function (playerName) {
@@ -49,7 +48,7 @@ var Game = function () {
   };
 
   this.init = function () {
-    if (this.isPlayable()) {
+    if (players.length) {
       currentPlayerIndex = 0;
       currentPlayer = players[currentPlayerIndex];
 
@@ -62,7 +61,7 @@ var Game = function () {
       return true;
     }
     return false
-  }
+  };
 
   this.howManyPlayers = function () {
     return players.length;
@@ -86,7 +85,7 @@ var Game = function () {
       currentPlayerIndex = 0;
 
     currentPlayer = players[currentPlayerIndex];
-  }
+  };
 
   this.roll = function (roll) {
     console.log(currentPlayer.name + " is the current player");
