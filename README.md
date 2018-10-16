@@ -1,5 +1,4 @@
 Legacy Code Retreat code base
-======
 
 Use this code base to run your own [Legacy Code Retreat](http://legacycoderetreat.jbrains.ca).
 
