@@ -9,6 +9,7 @@ var Game = function () {
   var PLACES_NUMBER = 12;
   var MIN_PLAYERS_NUMBER = 2;
   var VICTORY_POINT_NUMBER = 6;
+  var CATEGORY_QUESTIONS_NUMBER = 50;
 
   var players = [];
   var currentPlayer;
@@ -52,7 +53,7 @@ var Game = function () {
       currentPlayerIndex = 0;
       currentPlayer = players[currentPlayerIndex];
 
-      for (var i = 0; i < 50; i++) {
+      for (var i = 0; i < CATEGORY_QUESTIONS_NUMBER; i++) {
         questionCategories.forEach(function(category) {
           questions[category].push(category + " Question " + i);
         });
