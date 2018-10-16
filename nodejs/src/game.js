@@ -25,7 +25,7 @@ var Game = function () {
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function () {
-    return !(currentPlayer.purse == VICTORY_POINT_NUMBER)
+    return currentPlayer.purse === VICTORY_POINT_NUMBER;
   };
 
   var currentCategory = function () {
@@ -115,18 +115,18 @@ var Game = function () {
   };
 
   this.wasCorrectlyAnswered = function () {
-    var winner = true;
+    var notAWinner = true;
     if (isGettingOutOfPenaltyBox) {
       console.log('Answer was correct!!!!');
       currentPlayer.purse += 1;
       console.log(currentPlayer.name + " now has " +
         currentPlayer.purse + " Gold Coins.");
 
-      winner = didPlayerWin();
+      notAWinner = !didPlayerWin();
     }
 
     nextPlayer();
-    return winner;
+    return notAWinner;
   };
 
   this.wrongAnswer = function () {
