@@ -73,17 +73,11 @@ var Game = function () {
   };
 
   var movePlayer = function (player, steps) {
-    player.place = player.place + steps;
-    if (player.place >= PLACES_NUMBER) {
-      player.place = player.place - PLACES_NUMBER;
-    }
+    player.place = ( player.place + steps ) % PLACES_NUMBER;
   }
 
   var nextPlayer = function () {
-    currentPlayerIndex += 1;
-    if (currentPlayerIndex == players.length)
-      currentPlayerIndex = 0;
-
+    currentPlayerIndex = ( currentPlayerIndex + 1 ) % players.length;
     currentPlayer = players[currentPlayerIndex];
   };
 
