@@ -7,8 +7,6 @@ function runGame(Game, players) {
     game.add(player);
   } );
 
-  // var isReady = game.init();
-
   if (game.init) {
     game.init();
   }
