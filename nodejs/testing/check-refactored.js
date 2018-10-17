@@ -2,16 +2,15 @@ const promisify = require('util').promisify;
 const exec = require('child_process').exec;
 const execPromise = promisify( exec );
 
-const commands = [];
-
 const quantity = 1000;
-for( let i = 0; i < quantity; i++ ) {
-    const check = execPromise( `node cli-runner.js ${i} > io/tmp/output-${i}` )
-        .then( () => execPromise( `diff io/output/output-${i} io/tmp/output-${i}` ) );
-    commands.push( check );
+
+let chain = Promise.resolve();
+for ( let i = 0; i < quantity; i++ ) {
+    chain = chain.then( () => execPromise( `node cli-runner.js ${i} > io/tmp/output-${i}` ) );
+    chain = chain.then( () => execPromise( `diff io/output/output-${i} io/tmp/output-${i}` ) );
 }
 
-Promise.all(commands)
+chain
     .then( () => {
         console.log( 'difference not found' );
     } )
