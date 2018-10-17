@@ -113,7 +113,7 @@ const Game = function () {
     let notAWinner = true;
     if ( isGettingOutOfPenaltyBox ) {
       console.log( 'Answer was correct!!!!' );
-      currentPlayer.purse += 1;
+      currentPlayer.purse++;
       console.log( `${currentPlayer.name} now has ${currentPlayer.purse} Gold Coins.` );
 
       notAWinner = !didPlayerWin();

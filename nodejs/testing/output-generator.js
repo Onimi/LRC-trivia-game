@@ -7,15 +7,14 @@ const commands = [];
 const quantity = 1000;
 for( let i = 0; i < quantity; i++ ) {
     const cmd = `node cli-runner.js ${i} 1 > io/output/output-${i}`;
-    commands.push( execPromise(cmd) );
+    commands.push( execPromise( cmd ) );
 }
 
 Promise.all(commands)
-    .then( res => {
-        // console.log(res);
-        console.log('data collected');
-    })
-    .catch(e => {
-        console.log('ERROR OCCURED');
-        console.log(e);
-    });
+    .then( () => {
+        console.log( 'data collected' );
+    } )
+    .catch( e => {
+        console.log( 'ERROR OCCURED' );
+        console.log( e );
+    } );
