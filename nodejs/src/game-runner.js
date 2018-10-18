@@ -18,7 +18,7 @@ function runGame(Game, players) {
     if (Math.floor(Math.random() * 10) == 7) {
       notAWinner = game.wrongAnswer();
     } else {
-      notAWinner = game.wasCorrectlyAnswered();
+      notAWinner = game.correctAnswer();
     }
 
   } while (notAWinner);

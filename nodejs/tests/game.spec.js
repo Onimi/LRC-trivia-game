@@ -224,7 +224,7 @@ describe('Test public methods', function () {
     });
   });
 
-  describe('Test `wasCorrectlyAnswered` method', function () {
+  describe('Test `correctAnswer` method', function () {
     it('correct answer without a winner', function () {
       const game = prepare( Game, players.slice(0, 2) );
 
@@ -234,7 +234,7 @@ describe('Test public methods', function () {
       prepareStub.restore();
 
       const stub = sinon.stub(console, 'log');
-      const nextStep = game.wasCorrectlyAnswered();
+      const nextStep = game.correctAnswer();
       stub.restore();
 
       should( stub.callCount ).be.exactly( 2 );
@@ -252,7 +252,7 @@ describe('Test public methods', function () {
       prepareStub.restore();
 
       const stub = sinon.stub(console, 'log');
-      const nextStep = game.wasCorrectlyAnswered();
+      const nextStep = game.correctAnswer();
       stub.restore();
 
       should( stub.callCount ).be.exactly( 2 );
@@ -274,7 +274,7 @@ function craeteGameState ( Game, players=[], steps = [] ) {
 
   for( let i = 0; i < steps.length; i++ ) {
     game.roll( steps[i].dice );
-    const nextStep = steps[i].answer ? game.wasCorrectlyAnswered() : game.wrongAnswer();
+    const nextStep = steps[i].answer ? game.correctAnswer() : game.wrongAnswer();
     if ( !nextStep ) {
       break;
     }

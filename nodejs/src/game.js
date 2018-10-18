@@ -109,7 +109,7 @@ const Game = function () {
     }
   };
 
-  this.wasCorrectlyAnswered = function () {
+  this.correctAnswer = function () {
     let notAWinner = true;
     if ( isGettingOutOfPenaltyBox ) {
       console.log( 'Answer was correct!!!!' );
