@@ -1,6 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
+// const DEFAULT_PATH = path.join(__dirname, 'io', 'input','input.json');
+const destinationRaw = process.argv[2] || './input.json';
+const chunks = destinationRaw.split('/');
+if ( destinationRaw.startsWith('/') ) {
+    chunks[0] = '/' + chunks[0];
+}
+const destination = path.join( ...chunks );
+
+// console.log(destinationRaw, 'DEST_RAW');
+// console.log(destination, 'DEST');
+
 const names = [
     'Chet', 'Pat', 'Sue', 'Kattie', 'Lisabeth', 'Noriko', 'Ginette', 'Lasandra',
     'Michelle', 'Collen', 'Chanell', 'Marcellus', 'Manie', 'Madelene', 'Houston', 'Colby',
@@ -45,10 +56,10 @@ for (let i = 0; i < INPUT_NUMBER; i++) {
     data.push( generateInput() );
 }
 
-fs.writeFile(path.join(__dirname, 'io', 'input','input.json'), JSON.stringify(data), function(err) {
+fs.writeFile( destination, JSON.stringify(data), function(err) {
     if(err) {
         return console.log(err);
     }
 
     console.log("The file was saved!");
-})
+} );

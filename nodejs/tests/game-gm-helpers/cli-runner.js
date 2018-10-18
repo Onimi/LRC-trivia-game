@@ -6,11 +6,15 @@ const originalGameRunner = require('../../origin/game-runner.js');
 const refactoredGame = require('../../src/game.js');
 const refactoredGameRunner = require('../../src/game-runner.js');
 
-const inputData = require('./io/input/input.json');
+// const inputData = require('./io/input/input.json');
+// const inputData = require('./io2/input.json');
+const inputData = require('./io/input.json');
 const length = inputData.length;
 
 const index = ( process.argv[2] % length ) || 0;
 const input = inputData[index];
+
+// console.log(index);
 
 const useOriginal = !!process.argv[3];
 const Game = useOriginal ? originalGame : refactoredGame;
