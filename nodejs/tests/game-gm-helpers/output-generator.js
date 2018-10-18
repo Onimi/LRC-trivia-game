@@ -47,21 +47,3 @@ promisify( fs.readdir )( destination )
         console.log( 'ERROR OCCURED' );
         console.log( e );
     } );
-
-// for( let i = 0; i < quantity; i++ ) {
-//     const outputPath = path.join( destination, `output-${i}` );
-//     const cliRunnerPath = path.join( __dirname, 'cli-runner.js' );
-
-//     // const cmd = `node cli-runner.js ${i} 1 > io/output/output-${i}`;
-//     const cmd = `node ${cliRunnerPath} ${i} 1 > ${outputPath}`;
-//     commands.push( execPromise( cmd ) );
-// }
-
-// Promise.all(commands)
-//     .then( () => {
-//         console.log( 'data collected' );
-//     } )
-//     .catch( e => {
-//         console.log( 'ERROR OCCURED' );
-//         console.log( e );
-//     } );

@@ -14,8 +14,6 @@ const length = inputData.length;
 const index = ( process.argv[2] % length ) || 0;
 const input = inputData[index];
 
-// console.log(index);
-
 const useOriginal = !!process.argv[3];
 const Game = useOriginal ? originalGame : refactoredGame;
 const runner = useOriginal ? originalGameRunner : refactoredGameRunner;
