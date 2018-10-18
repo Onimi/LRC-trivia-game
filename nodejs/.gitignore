@@ -1,6 +1,0 @@
-node_modules
-*.iml
-.idea
-package-lock.json
-tests/game-gm-helpers/io/*
-
