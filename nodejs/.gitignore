@@ -2,5 +2,5 @@ node_modules
 *.iml
 .idea
 package-lock.json
-testing/io
+tests/game-gm-helpers/io/*
 

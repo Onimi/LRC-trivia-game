@@ -2,7 +2,7 @@ const promisify = require('util').promisify;
 const exec = require('child_process').exec;
 const execPromise = promisify( exec );
 
-const quantity = 1000;
+const quantity = 10//1000;
 
 let chain = Promise.resolve();
 for ( let i = 0; i < quantity; i++ ) {

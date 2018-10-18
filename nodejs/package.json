@@ -4,7 +4,7 @@
   "description": "Test with node.js =====================",
   "main": "game.js",
   "scripts": {
-    "test": "mocha src/**/*.spec.js"
+    "test": "mocha tests/**/*.spec.js"
   },
   "author": "",
   "license": "GPL v3",

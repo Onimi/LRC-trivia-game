@@ -1,10 +1,10 @@
 const seedRandom = require('seed-random');
 
-const originalGame = require('../origin/game.js');
-const originalGameRunner = require('../origin/game-runner.js');
+const originalGame = require('../../origin/game.js');
+const originalGameRunner = require('../../origin/game-runner.js');
 
-const refactoredGame = require('../src/game.js');
-const refactoredGameRunner = require('../src/game-runner.js');
+const refactoredGame = require('../../src/game.js');
+const refactoredGameRunner = require('../../src/game-runner.js');
 
 const inputData = require('./io/input/input.json');
 const length = inputData.length;

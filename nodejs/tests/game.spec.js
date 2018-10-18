@@ -1,7 +1,7 @@
 const should = require('should');
 const sinon = require('sinon');
 
-const Game = require('./game.js');
+const Game = require('../src/game.js');
 const players = ['John', 'Jane', 'Mark', 'Tim', 'Alice', 'Bob', 'Trudy', 'Jim', 'David', 'Ann', 'Brian'];
 const steps = [
   {dice: 1, answer: false},
