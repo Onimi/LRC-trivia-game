@@ -1,7 +1,7 @@
 const seedRandom = require('seed-random');
 
-const originalGame = require('./origin/game.js');
-const originalGameRunner = require('./origin/game-runner.js');
+const originalGame = require('../origin/game.js');
+const originalGameRunner = require('../origin/game-runner.js');
 
 const refactoredGame = require('../src/game.js');
 const refactoredGameRunner = require('../src/game-runner.js');
